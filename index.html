@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head> 
+		<title>Multiselect Dropdown</title>
+		<style>
+		.btn{
+			width:150px;
+			height:40px;
+		}
+		.listItem:hover{
+			background-color: gray;
+		}
+		</style>
+	</head>
+	<body>
+		<button class="btn" type="button" onclick="showOptions('optionsMenu')">Select Profile >>
+		</button>
+		<div id="optionsMenu" style="height: 100px; width:250px; display:none">
+
+		</div>
+		<script>
+		var profileNamesList = [
+			"Giraffe-SRM-ube3Srm",
+			"Giraffe-SRM-ude7Srm",
+			"Giraffe-SRM-ufe3Srm"
+		];
+		var selectedProfiles=[];
+		var clicked = false;
+		function toggle(){
+			if(clicked === false){
+				clicked = true;
+			} else{
+				clicked = false;
+			}
+			return clicked;
+		}
+		function showOptions(id){
+			var show = toggle();
+			if(show === true){
+				document.getElementById(id).style.display="block";
+			} else {
+				document.getElementById(id).style.display="none";
+			}
+		}
+
+		function addOnClicks(list){
+			var listItems = list.getElementsByTagName('li');
+			for(var i=0, len=listItems.length; i<len; i++){
+				listItems[i].onclick = function(i){
+					var i = parseInt(this.attributes.i.value);
+					if(listItems[i].getAttribute('selected') === "true"){
+						listItems[i].setAttribute('selected', false);
+					} else {
+						listItems[i].setAttribute('selected', true);
+					}
+					console.log(listItems[i].innerHTML+ " clicked");
+				};
+			}
+			return list;
+		}
+		function styleList(list){
+			list.style = "list-style: none";
+			list.style = "padding-left:0px;"
+			return list;
+		}
+		function addToList(list, item, i){
+			var listItem;
+			var text;
+			listItem = document.createElement("LI");
+			listItem.className = "listItem";
+			text = document.createTextNode(item);
+			listItem.setAttribute('selected', false);
+			listItem.setAttribute('i', i);
+			listItem.appendChild(text);
+			list.appendChild(listItem);
+			return list;
+		}
+		function createList(){
+			var container = document.getElementById('optionsMenu');
+			var list = document.createElement("UL");
+			container.appendChild(list);
+			return list;
+		}
+		function loadProfilesButton(){
+			var list = createList();
+			for(var i=0, len = profileNamesList.length; i < len; i++){
+				list = addToList(list, profileNamesList[i], i);
+			}
+			list = addOnClicks(list);
+			list = styleList(list);
+		}
+		loadProfilesButton();
+		</script>
+	</body>
+</html>
