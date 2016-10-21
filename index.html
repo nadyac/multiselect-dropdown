@@ -6,10 +6,15 @@
 		.btn{
 			width:150px;
 			height:40px;
+			border-radius: 4px;
+			font-size:18px;
 		}
 		.listItem:hover{
 			background-color: gray;
 		}
+/*		li:after {
+    		content:"\2713\0020";
+		}*/
 		</style>
 	</head>
 	<body>
@@ -50,13 +55,19 @@
 					var i = parseInt(this.attributes.i.value);
 					if(listItems[i].getAttribute('selected') === "true"){
 						listItems[i].setAttribute('selected', false);
+						var end = listItems[i].innerHTML.length;
+						listItems[i].innerHTML = listItems[i].innerHTML.slice(0, end-1);
 					} else {
 						listItems[i].setAttribute('selected', true);
+						listItems[i].innerHTML = listItems[i].innerHTML + "&#10004";
 					}
 					console.log(listItems[i].innerHTML+ " clicked");
 				};
 			}
 			return list;
+		}
+		function styleListItem(listItem, attrib){
+			listItem.style = attrib;
 		}
 		function styleList(list){
 			list.style = "list-style: none";
